@@ -56,7 +56,7 @@ Khi PKI được khởi tạo sẽ nằm trong **/etc/easy-rsa/pki**
 
 Generate the Certificate Authority (CA) Certificate and Key (Tạo cert CA và key để ký cert ứng dụng khách và máy chủ OpenVPN)
 ```console
-./easyrsa build-ca
+./easyrsa build-ca nopass
 ```
 Nhập passphrase của CA và tên chung của server. Cert CA được tạo và lưu trữ tại **/etc/easy-rsa/pki/ca.crt**
 
