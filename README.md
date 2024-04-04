@@ -234,10 +234,7 @@ git clone https://github.com/evgeny-gridasov/openvpn-otp
 ### 4. Setup và config Plugin
 Truy cập vào thư mục chứa source code Plugin để tiến hành tạo Configuration và Makefiles
 ```console
-cd openvpn-otp/
-```
-```console
-./autogen.sh
+cd openvpn-otp/ && ./autogen.sh
 ```
 Build và cài đặt Plugin OpenVPN-OTP
 ```console
@@ -278,24 +275,25 @@ systemctl restart openvpn-server@server.service
 ### 6. Tạo file chứa cấu hình User và OTP
 Mặc định thì OpenVPN-OTP sẽ sử dụng file sau **/etc/ppp/otp-secrets**
 ```console
-touch /etc/ppp/otp-secrets
+mkdir /etc/ppp && touch /etc/ppp/otp-secrets
 ```
 Sử dụng Google Authenticator đã được cài đặt để tạo key. Mẫu câu lệnh như sau:
 ```console
-google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=17 --issuer=foocorp --label=user@hostname --secret=/root/.user.google_authenticator > /root/user.auth
+google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=17 --issuer=Lab --label=user@hostname --secret=/root/.user.google_authenticator > /root/user.auth
 ```
+- **--issuer**: là tên tổ chức của bạn (Khi quét QR nó sẽ đứng đầu tiên)
 - **user**: là tên user client đã tạo lúc setup OpenVPN (test, test2)
 - **hostname**: là tên của server OpenVPN
 
 Tạo User **test** với hostname hiện tại của VPS là **openvpn** thì câu lệnh sẽ là:
 ```console
-google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=17 --issuer=foocorp --label=test@openvpn --secret=/root/.test.google_authenticator > /root/test.auth
+google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=17 --issuer=Lab --label=test@openvpn --secret=/root/.test.google_authenticator > /root/test.auth
 ```
 **Nếu command line không tự kết thúc thì sử dụng "Ctrl C" để thoát**
 
 Tương tự với User **test2**:
 ```console
-google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=17 --issuer=foocorp --label=test2@openvpn --secret=/root/.test2.google_authenticator > /root/test2.auth
+google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=17 --issuer=Lab --label=test2@openvpn --secret=/root/.test2.google_authenticator > /root/test2.auth
 ```
 ![Create user authen OTP](Picture/Create%20user%20authen%20OTP.png)
 
