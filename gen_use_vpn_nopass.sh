@@ -25,33 +25,11 @@ if [ -f "/etc/easy-rsa/pki/reqs/$client_name.req" ]; then
 fi
 echo "User $client_name chua ton tai"
 echo "done"
+
 #3. Tao cert client va private key
 echo "2. Tao cert va private key cho $client_name"
 cd /etc/easy-rsa
-
-# Tao file expect script tam thoi
-expect_script=$(mktemp)
-chmod +x "$expect_script"
-
-cat <<EOF >"$expect_script"
-#!/usr/bin/expect
-
-set timeout -1
-
-spawn ./easyrsa build-client-full $client_name nopass
-
-expect "Enter pass phrase for /etc/easy-rsa/pki/private/ca.key:"
-send "123\n"
-
-expect "done"
-EOF
-
-# Chay script expect tu dong dien mat khau
-"$expect_script"
-
-# Xoa file expect script tam thoi
-rm "$expect_script"
-
+./easyrsa build-client-full $client_name nopass
 echo "done"
 
 #4. Tao thu muc cho client va copy cert, keys vao thu muc
@@ -76,7 +54,7 @@ ovpn_content=$(cat <<EOF
 client
 dev tun
 proto udp
-remote 18.142.99.252 1194
+remote 192.168.0.119 1194
 resolv-retry infinite
 nobind
 persist-key
@@ -121,10 +99,10 @@ echo "done"
 
 #6. Su dung Google Authenticator de tao khoa OTP cho client
 echo "5. Tao OTP cho client $client_name"
-echo "-1" | google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=17 --issuer=VSEC --label=$client_name@ps --secret=/root/.$client_name.google_authenticator > /root/secret_otp/$client_name.auth
+echo "-1" | google-authenticator --time-based --disallow-reuse --force --rate-limit=3 --rate-time=30 --window-size=17 --issuer=VSEC --label=$client_name@openvpn --secret=/root/.$client_name.google_authenticator > /root/secret_otp/$client_name.auth
 
 # Lay ma bi mat tu tep tin OTP
-otp_secret=$(grep "Your new secret key is:" /root/$client_name.auth | awk '{print $6}')
+otp_secret=$(grep "Your new secret key is:" /root/secret_otp/$client_name.auth | awk '{print $6}')
 echo "done"
 
 #7. Cau hình tệp tin otp-secrets
@@ -135,6 +113,6 @@ echo "done"
 #8.Convert URL to PNG
 echo "7. Tao QR code"
 qr_code=$(grep "https://www.google.com/chart" /root/secret_otp/$client_name.auth | awk '{print $1}')
-wget --output-document=/root/users_vpn/$client_name/$client_name.png $qr_code
+wget --output-document=/root/users_vpn/$client_name/$client_name.png "$qr_code"
 echo "Tao file $client_name.png thanh cong!"
 echo "done"
