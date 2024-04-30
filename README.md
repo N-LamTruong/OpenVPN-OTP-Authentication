@@ -15,6 +15,7 @@
 **- Cài đặt và thiết lập cấu hình OpenVPN 2.5.7 trên Ubuntu 20.04**
 
 **- Cài đặt và thiết lập cấu hình OpenVPN Connect v3 trên MacOS**
+
 ## Điều kiện kiên quyết (tối thiểu để lab):
 **- Server Ubuntu 22.04 LTS tối thiểu 1 vCPU, 1 GB RAM**
 
@@ -334,6 +335,23 @@ test2 openvpn totp:sha1:base32:5N4CH66GGIVPL3XEHGHJWIWNXI::xxx *
 - Tạo folder **/root/secret_otp**
 
     Click here [**Shell Script without passphrase**](gen_user_vpn_nopass.sh)
+
+### Nếu muốn xóa user làm theo các bước sau (sẽ viết script trong tương lai)
+1. Sử dụng tool easy-rsa xóa cert user:
+./easyrsa revoke $client_name
+
+2. Xóa folder user trong openvpn:
+rm -rf /etc/openvpn/client/$client_name
+
+3. Xóa folder config client:
+rm -rf /root/users_vpn/$client_name
+
+4. Xóa file secret OTP:
+rm /root/secret_otp/$client_name.auth
+
+5. Xóa secret key user:
+sed -i '/$client_name/d' /etc/ppp/otp-secrets
+
 ## IV. Tài liệu này sẽ hướng dẫn cách cài đặt và cấu hình Client OpenVPN
 **- Cài đặt và thiết lập cấu hình OpenVPN 2.5.7 trên Windows 10**
 
