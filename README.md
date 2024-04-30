@@ -316,13 +316,21 @@ test2 openvpn totp:sha1:base32:5N4CH66GGIVPL3XEHGHJWIWNXI::xxx *
 ```
 => Đến đây coi như đã hoàn tất việc cài đặt cấu hình OpenVPN với Plugin OpenVPN-OTP trên Server
 
-## III. Script create, config client and generate qr code [click here](gen_user_vpn.sh)
+## III. Script create, config client and generate qr code 
+### Trường hợp 1: Sử dụng passphrase
 - Cần cài đặt package **expect**
 - Tạo folder **/root/users_vpn**
 - Tạo folder **/root/secret_otp**
+
+    Click here [**Shell Script**](gen_user_vpn_passphrase.sh)
+### Trường hợp 2: Nopass (không sử dụng passphrase)
+- Tạo folder **/root/users_vpn**
+- Tạo folder **/root/secret_otp**
+
+    Click here [**Shell Script without passphrase**](gen_user_vpn_nopass)
+## Tài liệu tiếp theo sẽ hướng dẫn cách cài đặt và cấu hình Client OpenVPN [click here](https://gitlab.vsec.vn/lamtruong/client-openvpn-otp-authentication.git)
+
 ### Nghiên cứu, nâng cấp trong thời gian sắp tới:
 **- [Configure OpenVPN LDAP Based Authentication](https://kifarunix.com/configure-openvpn-ldap-based-authentication/)**
 
 **- [Configure OpenVPN Data Channel Offload](https://openvpn.net/blog/openvpn-data-channel-offload/)**
-
-## Tài liệu tiếp theo sẽ hướng dẫn cách cài đặt và cấu hình Client OpenVPN [click here](https://gitlab.vsec.vn/lamtruong/client-openvpn-otp-authentication.git)
