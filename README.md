@@ -327,8 +327,106 @@ test2 openvpn totp:sha1:base32:5N4CH66GGIVPL3XEHGHJWIWNXI::xxx *
 - Tạo folder **/root/users_vpn**
 - Tạo folder **/root/secret_otp**
 
-    Click here [**Shell Script without passphrase**](gen_user_vpn_nopass)
-## Tài liệu tiếp theo sẽ hướng dẫn cách cài đặt và cấu hình Client OpenVPN [click here](https://gitlab.vsec.vn/lamtruong/client-openvpn-otp-authentication.git)
+    Click here [**Shell Script without passphrase**](gen_user_vpn_nopass.sh)
+## IV. Tài liệu này sẽ hướng dẫn cách cài đặt và cấu hình Client OpenVPN
+**- Cài đặt và thiết lập cấu hình OpenVPN 2.5.7 trên Windows 10**
+
+**- Cài đặt và thiết lập cấu hình OpenVPN 2.5.7 trên Ubuntu 20.04**
+
+**- Cài đặt và thiết lập cấu hình OpenVPN Connect v3 trên MacOS**
+
+### Điều kiện kiên quyết:
+**- Liên hệ với admin để được cấp:** 
+1. **Folder config**
+2. **User login**
+3. **Link quét mã QR code Google Authenticator**
+
+**- Cung cấp đúng thông tin OS đang sử dụng cho admin (Windows, Linux or MacOS)**
+
+**- Trên điện thoại cá nhân đã cài app Google Authenticator**
+
+**- Chú ý cài đúng version OpenVPN 2.5.7 để tránh lỗi không mong muốn**
+
+### 1. Dowload and Install, Setup OpenVPN on Windows 10
+#### Ví dụ: Sử dụng folder config và account user **test**
+Download OpenVPN version 2.5.7 [tại đây](https://openvpn.net/community-downloads/)
+
+![Dowload](Picture/1%20Windows.png)
+
+Install default
+
+![Install](Picture/2%20Windows.png)
+
+Sử dụng folder config OpenVPN do admin cấp
+Trong folder admin gửi sẽ gồm 5 file (tên có thể khác tùy vào từng user):
+- ca.crt
+- ta.key
+- test.crt
+- test.key
+- test.ovpn
+
+Chuyển chúng vào **C:\Program Files\OpenVPN\config**
+
+![Move folder config](Picture/3%20Windows.png)
+
+Quét mã QR Google Authenticator
+**Truy cập vào link mà admin gửi trước đó. Sử dụng điện thoại mở app Google Authenticator và quét mã hiển thị trên màn hình máy tính**
+
+**Cuối cùng là test Login**
+
+Click đúp vào icon **màn hình có ổ khóa** ở góc dưới bên phải
+
+![Test connect 1](Picture/4%20Windows.png)
+
+Đăng nhập với **Username** do admin cấp và **Password** dùng 1 lần chính là mã 6 chữ số trong app Google Authenticator
+
+![Test connect 2](Picture/5%20Windows.png)
+
+![Test connect 3](Picture/6%20Windows.png)
+
+**-> Như vậy là kết nối đã thành công**. Nếu gặp lỗi vui lòng mô tả chi tiết và liên hệ admin để khắc phục.
+
+### 2. Dowload and Install, Setup OpenVPN on Ubuntu 20.04
+#### Ví dụ: Sử dụng folder config và account user **test2**
+Upgrade and Install OpenVPN apt repositories
+
+Cài đặt các phụ thuộc (bản desktop thường chưa có)
+```console
+apt install curl
+```
+Mặc định trên Ubuntu 20.04 LTS chỉ chứa ver 2.4.7 (cũ 02/2019), chúng ta cần cập nhật lại repo để sử dụng version mới hơn của OpenVPN
+```console
+mkdir -p /etc/apt/keyrings && curl -fsSL https://swupdate.openvpn.net/repos/repo-public.gpg | gpg --dearmor > /etc/apt/keyrings/openvpn-repo-public.gpg
+```
+```console
+echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/openvpn-repo-public.gpg] http://build.openvpn.net/debian/openvpn/release/2.5 focal main" > /etc/apt/sources.list.d/openvpn-aptrepo.list
+```
+```console
+apt-get update && apt-get install openvpn=2.5.7-focal0
+```
+Sử dụng folder config OpenVPN do admin cấp
+Trong folder admin gửi sẽ gồm 5 file (tên có thể khác tùy vào từng user):
+- ca.crt
+- ta.key
+- test2.crt
+- test2.key
+- test2.ovpn
+
+**Lưu ý**: Các file phải để cùng folder với nhau
+
+Quét mã QR Google Authenticator
+**Truy cập vào link mà admin gửi trước đó. Sử dụng điện thoại mở app Google Authenticator và quét mã hiển thị trên màn hình máy tính**
+
+**Test Login**
+
+Tại folder chứa 5 file đó sử dụng command line
+```console
+openvpn test2.ovpn
+```
+Nếu hiện dòng cuối cùng là **Initialization Sequence Completed** nghĩa là đã kết nối thành công. Nếu gặp lỗi vui lòng mô tả chi tiết và liên hệ admin để khắc phục!
+
+### 3. Dowload and Install, Setup OpenVPN Connect v3 on MacOS
+- Đang cập nhật... (đã có nhưng chưa bổ sung hướng dẫn, nếu cần sử dụng vui lòng liên hệ admin)
 
 ### Nghiên cứu, nâng cấp trong thời gian sắp tới:
 **- [Configure OpenVPN LDAP Based Authentication](https://kifarunix.com/configure-openvpn-ldap-based-authentication/)**
