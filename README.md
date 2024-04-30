@@ -56,9 +56,11 @@ Khi PKI được khởi tạo sẽ nằm trong **/etc/easy-rsa/pki**
 
 Generate the Certificate Authority (CA) Certificate and Key (Tạo cert CA và key để ký cert ứng dụng khách và máy chủ OpenVPN)
 ```console
-./easyrsa build-ca nopass
+./easyrsa build-ca
 ```
 Nhập passphrase của CA và tên chung của server. Cert CA được tạo và lưu trữ tại **/etc/easy-rsa/pki/ca.crt**
+
+- Thêm **nopass** vào cuối để vô hiệu hóa việc sử dụng passphrase nếu không muốn bảo mật nâng cao
 
 Generate Diffie Hellman Parameters (Tạo các key Diffie-Hellman được sử dụng để trao đổi key trong quá trình bắt tay TLS giữa máy chủ OpenVPN và các client đang kết nối)
 ```console
@@ -68,9 +70,9 @@ Tham số DH có kích thước 2048 được tạo tại **/etc/easy-rsa/pki/dh
 ### 4. Generate OpenVPN Server Certificate and Key
 Để tạo cert và private key cho máy chủ OpenVPN, hãy chạy lệnh bên dưới
 ```console
-./easyrsa build-server-full server nopass
+./easyrsa build-server-full server
 ```
-Nhập passphrase CA đã tạo ở trên để tạo cert và key (**nopass** vô hiệu hóa việc sử dụng passphrase)
+Nhập passphrase CA đã tạo ở trên để tạo cert và key (thêm **nopass** vào cuối để vô hiệu hóa passphrase nếu bước 3 sử dụng)
 ### 5. Generate Hash-based Message Authentication Code (HMAC) key
 Khóa xác thực pre-shared TLS/SSL được sử dụng làm chữ ký HMAC bổ sung trên tất cả các gói bắt tay SSL/TLS để tránh tấn công DoS và tràn cổng UDP
 ```console
@@ -90,12 +92,12 @@ cp -rp /etc/easy-rsa/pki/{ca.crt,dh.pem,ta.key,crl.pem,issued,private} /etc/open
 ### 8. Generate OpenVPN Client Certificates and Keys
 Cert client OpenVPN và private key có thể được tạo như sau:
 ```console
-./easyrsa build-client-full test nopass
+./easyrsa build-client-full test
 ```
 - **test** là tên user client
 - Luôn sử dụng một user chung duy nhất cho từng client mà bạn đang tạo cert và key
 ```console
-./easyrsa build-client-full test2 nopass
+./easyrsa build-client-full test2
 ```
 Tương tự nếu muốn tạo thêm user client thứ 2, 3... Bạn có thể xem cách sử dụng lệnh **easyrsa** với **./easyrsa --help**
 ### 9. Copy Client Certificates and Keys to Client Directory
