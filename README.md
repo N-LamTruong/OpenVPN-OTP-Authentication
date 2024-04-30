@@ -9,6 +9,12 @@
 **- Script auto tạo config client và QR**
 
 **- Vận hành OpenVPN Server 2.5.7**
+
+**- Cài đặt và thiết lập cấu hình OpenVPN 2.5.7 trên Windows 10**
+
+**- Cài đặt và thiết lập cấu hình OpenVPN 2.5.7 trên Ubuntu 20.04**
+
+**- Cài đặt và thiết lập cấu hình OpenVPN Connect v3 trên MacOS**
 ## Điều kiện kiên quyết (tối thiểu để lab):
 **- Server Ubuntu 22.04 LTS tối thiểu 1 vCPU, 1 GB RAM**
 
